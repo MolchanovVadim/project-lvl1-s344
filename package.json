@@ -13,14 +13,17 @@
   "license": "ISC",
   "files": [
     "dist"
-   ],
-   "bin": {
-     "brain-games": "dist/bin/brain-games.js"
-   },
+  ],
+  "bin": {
+    "brain-games": "dist/bin/brain-games.js"
+  },
   "devDependencies": {
     "babel-cli": "^6.26.0",
     "babel-core": "^6.26.3",
     "babel-preset-env": "^1.7.0",
     "babel-preset-stage-0": "^6.24.1"
+  },
+  "dependencies": {
+    "readline-sync": "^1.4.9"
   }
 }
