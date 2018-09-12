@@ -7,7 +7,8 @@ export default(rules, getDataGame) => {
   console.log(`Hello, ${name}!\n`);
   const numberOfAnswersForWin = 3;
 
-  for (let i = 1; i <= numberOfAnswersForWin; i += 1) {
+  const getGame = (numberStep) => {
+    if (numberStep > numberOfAnswersForWin) return true;
     const [expression, correctAnswer] = getDataGame();
     console.log(`Question: ${expression}`);
     const answer = readlineSync.question('Your answer: ');
@@ -16,9 +17,10 @@ export default(rules, getDataGame) => {
     } else {
       console.log(`'${answer}' is wrong answer ;(. Correct answer was '${correctAnswer}'.`);
       console.log(`Let's try again, ${name}!`);
-      return;
+      return false;
     }
-  }
+    return getGame(numberStep + 1);
+  };
 
-  console.log(`Congratulations, ${name}!`);
+  if (getGame(1)) console.log(`Congratulations, ${name}!`);
 };
