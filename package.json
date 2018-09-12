@@ -1,6 +1,6 @@
 {
   "name": "braingames_vadim_molchanov",
-  "version": "3.0.2",
+  "version": "4.0.1",
   "description": "braingames",
   "main": "index.js",
   "scripts": {
@@ -17,7 +17,8 @@
   ],
   "bin": {
     "brain-games": "dist/bin/brain-games.js",
-    "brain-even": "dist/bin/brain-even.js"
+    "brain-even": "dist/bin/brain-even.js",
+    "brain-calc": "dist/bin/brain-calc.js"
   },
   "devDependencies": {
     "babel-cli": "^6.26.0",
