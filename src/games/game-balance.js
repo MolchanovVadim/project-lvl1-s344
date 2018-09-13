@@ -1,34 +1,36 @@
 import game from '..';
 
-export default() => {
-  const rules = 'Balance the given number.';
+const getLengthSumNumber = (value, acc = { lengthNumber: 0, sumNumber: 0 }) => {
+  if (value === 0) return acc;
+  acc.lengthNumber += 1;
+  acc.sumNumber += value % 10;
+  return getLengthSumNumber(Math.floor(value / 10), acc);
+};
 
-  const getDataGame = () => {
-    const number = (Math.floor(Math.random() * 100) + 100)
-      * (Math.floor(Math.random() * 50) + 1);
+const getCorrectAnswer = (number) => {
+  const { lengthNumber, sumNumber } = getLengthSumNumber(number);
 
-    const getParam = (value, acc) => {
-      if (value === 0) return acc;
-      acc.len += 1;
-      acc.sum += value % 10;
-      return getParam(Math.floor(value / 10), acc);
-    };
+  const baseDigit = Math.floor(sumNumber / lengthNumber);
+  const needAdd = sumNumber % lengthNumber;
 
-    const { len, sum } = getParam(number, { len: 0, sum: 0 });
-
-    const baseNumber = Math.floor(sum / len);
-    const needAdd = sum % len;
-
-    const getCorrectAnswer = (numberDigits, numAdd, result) => {
-      if (numberDigits === 0) return result;
-      return getCorrectAnswer(numberDigits - 1, numAdd - 1, `${numAdd > 0 ? baseNumber + 1 : baseNumber}${result}`);
-    };
-
-    const correctAnswer = getCorrectAnswer(len, needAdd, '');
-
-    const expression = `${number}`;
-    return [expression, correctAnswer];
+  const generateAnswer = (step = 1, result = '') => {
+    if (step > lengthNumber) return result;
+    return generateAnswer(step + 1,
+      `${step > needAdd ? baseDigit : baseDigit + 1}${result}`);
   };
 
+  return generateAnswer();
+};
+
+const getDataGame = () => {
+  const number = (Math.floor(Math.random() * 100) + 100)
+    * (Math.floor(Math.random() * 50) + 1);
+  const correctAnswer = getCorrectAnswer(number);
+  const expression = `${number}`;
+  return [expression, correctAnswer];
+};
+
+export default() => {
+  const rules = 'Balance the given number.';
   game(rules, getDataGame);
 };
