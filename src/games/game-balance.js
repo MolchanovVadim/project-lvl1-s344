@@ -1,31 +1,33 @@
-import game from '..';
+import game, { getRandomNumber } from '..';
 
-const getLengthSumNumber = (value, acc = { lengthNumber: 0, sumNumber: 0 }) => {
-  if (value === 0) return acc;
-  acc.lengthNumber += 1;
-  acc.sumNumber += value % 10;
-  return getLengthSumNumber(Math.floor(value / 10), acc);
+const findLengthAndSumDigitsOfNumber = (number) => {
+  const iter = (value, acc) => {
+    if (value === 0) return acc;
+    acc.lengthNumber += 1;
+    acc.sumNumber += value % 10;
+    return iter(Math.floor(value / 10), acc);
+  };
+  return iter(number, { lengthNumber: 0, sumNumber: 0 });
 };
 
-const getCorrectAnswer = (number) => {
-  const { lengthNumber, sumNumber } = getLengthSumNumber(number);
+const findNormalizedNumber = (number) => {
+  const { lengthNumber, sumNumber } = findLengthAndSumDigitsOfNumber(number);
 
   const baseDigit = Math.floor(sumNumber / lengthNumber);
   const needAdd = sumNumber % lengthNumber;
 
-  const generateAnswer = (step = 1, result = '') => {
+  const iter = (step = 1, result = '') => {
     if (step > lengthNumber) return result;
-    return generateAnswer(step + 1,
+    return iter(step + 1,
       `${step > needAdd ? baseDigit : baseDigit + 1}${result}`);
   };
 
-  return generateAnswer();
+  return Number(iter());
 };
 
 const getDataGame = () => {
-  const number = (Math.floor(Math.random() * 100) + 100)
-    * (Math.floor(Math.random() * 50) + 1);
-  const correctAnswer = getCorrectAnswer(number);
+  const number = (getRandomNumber(100) + 99) * (getRandomNumber(50));
+  const correctAnswer = String(findNormalizedNumber(number));
   const expression = `${number}`;
   return [expression, correctAnswer];
 };

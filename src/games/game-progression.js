@@ -1,6 +1,6 @@
 import game, { getRandomNumber } from '..';
 
-const ArithProgr = (initValue, step) => n => initValue + (n - 1) * step;
+const ArithProgr = (firstValue, step) => n => firstValue + (n - 1) * step;
 
 const getDataGame = () => {
   const initValue = getRandomNumber();
