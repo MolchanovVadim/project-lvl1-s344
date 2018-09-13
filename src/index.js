@@ -24,3 +24,5 @@ export default(rules, getDataGame) => {
 
   if (getGame(1)) console.log(`Congratulations, ${name}!`);
 };
+
+export const getRandomNumber = () => Math.floor(Math.random() * 10) + 1;

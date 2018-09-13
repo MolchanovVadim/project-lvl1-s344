@@ -1,21 +1,24 @@
-import game from '..';
+import game, { getRandomNumber } from '..';
+
+const ArithProgr = (initValue, step) => n => initValue + (n - 1) * step;
+
+const getDataGame = () => {
+  const initValue = getRandomNumber();
+  const lengthProgression = 10;
+  const nextNumber = ArithProgr(initValue, initValue);
+  const correctAnswer = String(nextNumber(initValue));
+
+  const generateExpression = (value, count = 1, express = '') => {
+    if (count > lengthProgression) return express;
+
+    return generateExpression(nextNumber(count + 1), count + 1,
+      express + (count === initValue ? '.. ' : `${value} `));
+  };
+  const expression = generateExpression(initValue);
+  return [expression, correctAnswer];
+};
 
 export default() => {
   const rules = 'What number is missing in this progression?';
-
-  const getDataGame = () => {
-    const initValue = Math.floor(Math.random() * 10) + 1;
-    const lengthProgression = 10;
-
-    const getData = (count, value, express, corrAnswer) => {
-      if (count > lengthProgression) return [express, String(corrAnswer)];
-
-      return getData(count + 1, value + initValue,
-        express + (count === initValue ? '.. ' : `${value} `),
-        count === initValue ? value : corrAnswer);
-    };
-    return getData(1, initValue, '', 0);
-  };
-
   game(rules, getDataGame);
 };
