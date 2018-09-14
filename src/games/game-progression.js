@@ -3,7 +3,7 @@ import game, { getRandomNumber } from '..';
 const ArithProgr = (firstValue, step) => n => firstValue + (n - 1) * step;
 
 const getDataGame = () => {
-  const initValue = getRandomNumber();
+  const initValue = getRandomNumber(10);
   const lengthProgression = 10;
   const nextNumber = ArithProgr(initValue, initValue);
   const correctAnswer = String(nextNumber(initValue));
